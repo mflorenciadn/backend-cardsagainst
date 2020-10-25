@@ -1,9 +1,94 @@
+const constants = require('./constants');
 const cards = require('../data/cardsArray');
 const player = require('../data/Models/player');
 const room = require('../data/Models/room');
 const round = require('../data/Models/round');
+const turn = require('../data/Models/turn');
 
-const rooms = [];
+let rooms = [];
+const MAX_ROUNDS = 5;
+const NUM_CARDS = 10;
+
+function gameControl() {
+    
+    let gameRoom = createRoom('1234');
+    let testPlayer1 = createPlayer('Pepe', '1234');
+    let testPlayer2 = createPlayer('Pepi', '1234');
+    let testPlayer3 = createPlayer('Coqui', '1234');
+    let testPlayer4 = createPlayer('Coco', '1234');
+    
+    console.log(gameRoom);
+    //if(room.players.length() >= MIN_PLAYERS && room.players.length() <= MAX_PLAYERS){
+    rooms.push(gameRoom);
+
+    let gameRounds = gameRoom.rounds;
+
+    for(let i = 0; i < MAX_ROUNDS; i++){
+        actualRound = createRound(gameRoom);
+        gameRounds.push(actualRound);
+    }    
+    gameRoom.winner = calculateGameWinner();
+}
+
+
+function createRoom(roomId){
+    const myRoom = new room.Room(roomId);
+    rooms.push(myRoom);
+    return myRoom;
+}
+
+function createRound(myRoom) {
+    const myRound = new round.Round();
+    myRound.roomId = myRoom.id;
+
+    let players = myRoom.players;
+    let num = players.indexOf(random(players));
+
+    let zar = players[num];
+    myRound.zar = zar;
+    zar.role = 'zar';
+    let otherPlayers = players.map(p => players.indexOf(p) !== num ); //esto no esta bien, devuelve bool en vez de los objetos
+
+    createTurn(zar);
+
+    otherPlayers.forEach(() => {
+        createTurn(player);
+    });
+
+    round.winner = calculateRoundWinner();
+
+    return myRound;
+}
+
+function createTurn(player){
+    if (player.role == 'zar') {
+        console.log('Esto hace un zar');
+        console.log(selectCard('black'));
+     
+    } else {
+        console.log('Esto hacen los otros jugadores');
+        for (let j = 0; j < NUM_CARDS; j++){
+            console.log(selectCard('white'));
+        }
+    }
+}
+
+function createPlayer(name, roomId){
+    const myPlayer = new player.Player(name, roomId);
+    const myRoom = rooms.find(room => room.id === roomId);
+    myRoom.players.push(myPlayer);
+    return myPlayer;
+}
+        
+
+function calculateGameWinner(){
+    console.log('Aca se calcula quien es el ganador del juego');
+}
+    
+function calculateRoundWinner(){
+    console.log('Aca se calcula quien es el ganador de la ronda');
+}
+
 
 function selectCard(color) { 
     let selected = '';
@@ -15,64 +100,22 @@ function selectCard(color) {
     {
         selected = random(cards.blackContent);   
     }
-
     return selected;
 }
 
 function random(array){
-    const random = Math.floor(Math.random()*(array.length));
+    const random = Math.floor(Math.random()*(array.length - 1));
     select = array[random];
 
     return select;
 }
 
-function createRoom(roomId){
-    const myRoom = new room.Room(roomId);
-    rooms.push(myRoom);
-    return myRoom;
-}
 
-function createPlayer(name, roomId){
-    const myPlayer = new player.Player(name, roomId);
-    const myRoom = rooms.find(room => room.id === roomId);
-    myRoom.players.push(myPlayer);
-    return myPlayer;
-}
-
-
-function createPlay(room) {
-    if(room.player.length() >= MIN_PLAYERS && room.player.length() <= MAX_PLAYERS){
-        if(room.rounds <= MAX_ROUNDS){
-            createRound(room.id);
-            room.rounds++;
-        }
-    } else {
-        //.....
-  }
-}
-
-function createRound(roomId) {
-    const myRound = new round.Round('1234');
-    console.log(myRound);
-    const myRoom = rooms.find(room => room.id === roomId);
-    console.log(myRoom);
-    //myRound.zar = random(myRoom.players);
-    //console.log(zar);
-    //......
-    return myRound;
-}
 
 //let selected = selectCard('white');
 //console.log(selected);
 
-
-let testRoom= createRoom('1234');
-console.log(testRoom);
-let testPlayer = createPlayer('Pepe', '1234');
-console.log(testPlayer);
-console.log(testRoom);
-
-console.log(rooms);
+console.log(gameControl());
 
 
 
