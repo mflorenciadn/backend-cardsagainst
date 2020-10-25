@@ -1,8 +1,9 @@
 class Room {
-    constructor(roomId, []) {  
+    constructor(roomId) {  
         this.id = roomId;
         this.players = [];
-        this.rounds = 0;
+        this.rounds = [];
+        this.winner = {};
     }
 }
 
