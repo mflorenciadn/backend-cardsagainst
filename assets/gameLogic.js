@@ -1,4 +1,7 @@
-const constants = require('./constants');
+const MAX_ROUNDS = require('./constants');
+const MIN_PLAYERS = require('./constants');
+const MAX_PLAYERS = require('./constants');
+const NUM_CARDS = require('./constants');
 const cards = require('../data/cardsArray');
 const player = require('../data/Models/player');
 const room = require('../data/Models/room');
@@ -6,8 +9,6 @@ const round = require('../data/Models/round');
 const turn = require('../data/Models/turn');
 
 let rooms = [];
-const MAX_ROUNDS = 5;
-const NUM_CARDS = 10;
 
 function gameControl() {
     
