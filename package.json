@@ -4,7 +4,8 @@
   "descripcion": "Proyecto final de la materia Taller de Programación 2 - Instituto ORT",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "startdev": "nodemon ./socketApi"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

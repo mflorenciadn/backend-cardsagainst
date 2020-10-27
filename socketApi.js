@@ -1,13 +1,25 @@
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const constants = require('./assets/constants');
-const room = require('./data/Models/room');
-const player = require('./data/Models/player');
+const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
 
-io.on('connect', socket => {
-    socket.send('Hello!');
+const port = process.env.PORT || 4001;
+const index = require("./routes/index");
+
+const app = express();
+app.use(index);
+
+const server = http.createServer(app);
+
+const io = socketIo(server);
+
+
+io.on("connection", (socket) => {
+  console.log("New client connected (back)");
+  socket.on("disconnect", () => {
+    console.log("Client disconnected (back)");
+  });
 });
 
-io.listen(3000);
+
+  
+server.listen(port, () => console.log(`Listening on port ${port}`));
