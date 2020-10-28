@@ -4,7 +4,7 @@ class Player {
       this.rooomId = roomId;
       this.points = 0;
       //this.socketId = socketId;
-      this.role = 'player';
+      this.isZar = false
     }
   }
 
