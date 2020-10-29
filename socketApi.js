@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server);
 
-const Player = require('Player');
+//const Player = require('Player');
 
 
 io.on("connection", (socket) => {
@@ -20,11 +20,8 @@ io.on("connection", (socket) => {
   socket.emit('message', 'Bienvenido a Cards Agains ORT');
   
   //mensaje a todos menos al que se conecta
-  // socket.on('connect', () => {
   //   socket.broadcast.emit('message', 'Un usuario ingreso')
-  // })
   
-
   //mensaje a todos en general
   //io.emit()
 
