@@ -8,7 +8,6 @@ module.exports = {
 	MIN_PLAYERS: MIN_PLAYERS,
 	MAX_PLAYERS: MAX_PLAYERS,
 	NUM_CARDS: NUM_CARDS,
-
 }
 
 // Otra manera de hacerlo:

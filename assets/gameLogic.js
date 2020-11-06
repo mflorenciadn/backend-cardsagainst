@@ -10,27 +10,30 @@ const turn = require('../data/Models/turn');
 
 let rooms = [];
 
-function gameControl() {
+// function gameControl() {
     
-    let gameRoom = createRoom('1234');
-    let testPlayer1 = createPlayer('Pepe', '1234');
-    let testPlayer2 = createPlayer('Pepi', '1234');
-    let testPlayer3 = createPlayer('Coqui', '1234');
-    let testPlayer4 = createPlayer('Coco', '1234');
+//     let gameRoom = createRoom('1234');
+//     let testPlayer1 = createPlayer('Pepe', '1234');
+//     let testPlayer2 = createPlayer('Pepi', '1234');
+//     let testPlayer3 = createPlayer('Coqui', '1234');
+//     let testPlayer4 = createPlayer('Coco', '1234');
     
-    console.log(gameRoom);
-    //if(room.players.length() >= MIN_PLAYERS && room.players.length() <= MAX_PLAYERS){
-    rooms.push(gameRoom);
+//     console.log(gameRoom);
+//     //if(room.players.length() >= MIN_PLAYERS && room.players.length() <= MAX_PLAYERS){
+//     rooms.push(gameRoom);
 
-    let gameRounds = gameRoom.rounds;
+//     let gameRounds = gameRoom.rounds;
 
-    for(let i = 0; i < MAX_ROUNDS; i++){
-        actualRound = createRound(gameRoom);
-        gameRounds.push(actualRound);
-    }    
-    gameRoom.winner = calculateGameWinner();
+//     for(let i = 0; i < MAX_ROUNDS; i++){
+//         actualRound = createRound(gameRoom);
+//         gameRounds.push(actualRound);
+//     }    
+//     gameRoom.winner = calculateGameWinner();
+// }
+
+function checkRooms(id){
+    return rooms.some(room => room.id === id)
 }
-
 
 function createRoom(roomId){
     const myRoom = new room.Room(roomId);
@@ -74,10 +77,20 @@ function createTurn(player){
     }
 }
 
-function createPlayer(name, roomId){
-    const myPlayer = new player.Player(name, roomId);
-    const myRoom = rooms.find(room => room.id === roomId);
-    myRoom.players.push(myPlayer);
+function createPlayer(id, name, roomId){
+    const myPlayer = new player.Player(id, name, roomId);
+    let myRoom = rooms.find(room => room.id === roomId);
+    if(myRoom != undefined)
+    { 
+        myRoom.players.push(myPlayer);
+    }
+    else
+    {
+        myRoom = createRoom(roomId)
+        myRoom.players.push(myPlayer);
+    }
+    // console.log(myPlayer)
+    // console.log(rooms)
     return myPlayer;
 }
         
@@ -116,10 +129,10 @@ function random(array){
 //let selected = selectCard('white');
 //console.log(selected);
 
-console.log(gameControl());
+//console.log(gameControl());
 
 
 
-
+module.exports = {createRoom, createPlayer, createRound, createTurn, random, selectCard, calculateGameWinner, calculateRoundWinner, rooms, checkRooms};
 
 
