@@ -1,4 +1,5 @@
 const gameLogic = require('../assets/gameLogic')
+const CONST = require('../assets/constants')
 
 const usedBlack = []
 const usedWhite = []
@@ -6,7 +7,7 @@ const usedWhite = []
 const getWhiteCardsPlayer = () => {
     const whiteCardsPlayer= [];
     
-    for(let i=0; i < 10; i++) {
+    for(let i=0; i < CONST.NUM_CARDS; i++) {
         const whiteCard= gameLogic.selectCard('white')
 
         if(!whiteCard.used){
@@ -39,8 +40,10 @@ const getBlackCard = () => {
     }  
     return blackCard;
 }
-console.log(getBlackCard());
-console.log(usedBlack);
+
+const chooseCard = (id) => {
+
+}
 
 module.exports = { getWhiteCardsPlayer, getBlackCard, usedBlack, usedWhite}; 
 

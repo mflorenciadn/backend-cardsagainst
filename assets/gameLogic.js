@@ -34,9 +34,8 @@ function createRoom(roomId){
     return myRoom;
 }
 
-function createRound(myRoom) {
+function createRound(id) {
     const myRound = new round.Round();
-    myRound.roomId = myRoom.id;
 
     const players = myRoom.players;
 
@@ -50,16 +49,12 @@ function createRound(myRoom) {
 }
 
 function createTurn(player){
+    const myTurn = new turn.Turn(player);
 
     if (player.isZar) {
         console.log('Esto hace un zar');
-        console.log(selectCard('black'));
-     
     } else {
         console.log('Esto hacen los otros jugadores');
-        for (let j = 0; j < CONST.NUM_CARDS; j++){
-            console.log(selectCard('white'));
-        }
     }
 }
 
@@ -69,7 +64,6 @@ function createPlayer(name, roomId){
     myRoom.players.push(myPlayer);
     return myPlayer;
 }
-        
 
 function calculateGameWinner(players){
     const winner = {}

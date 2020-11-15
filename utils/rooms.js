@@ -4,23 +4,31 @@ const CONST = require('../assets/constants')
 
 myRoom = gameLogic.createRoom(roomId);
 
-const playGame = (myRoom) => {
-    for(let i = 0; i < CONST.MAX_ROUNDS; i++){
-        const validGame = isValidGame();
-        const players = myRoom.players;
 
-        if (validGame) {
-            if (i < players.length) {
-                players[i].isZar = true;
+const playGame = (myRoom) => {
+    
+    const validGame = isValidGame();
+
+    while (validGame) {
+        for(let i = 0; i < CONST.MAX_ROUNDS; i++){
+            validGame = isValidGame();
+            const players = myRoom.players;
+
+            if (validGame) {
+                if (i < players.length) {
+                    players[i].isZar = true;
+                }
+                else {
+                    players[i-myRoom.players.length]
+                }
+                const round = gameLogic.createRound(myRoom.id);
+                myRoom.rounds.push(round)
+                players.foreach(p => p.isZar= false)
             }
-            else {
-                players[i-myRoom.players.length]
-            }
-            const round = gameLogic.createRound(myRoom);
-            players.foreach(p => p.isZar= false)
         }
+    
+        myRoom.winner = gameLogic.calculateGameWinner(myRoom.players)
     }
-    myRoom.winner = gameLogic.calculateGameWinner(myRoom.players)
 }
 
 
