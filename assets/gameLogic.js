@@ -1,5 +1,5 @@
 const CONST = require('./constants');
-const cards = require('../data/cardsArray');
+const cards = require('../data/db_cards');
 const player = require('../data/Models/player');
 const room = require('../data/Models/room');
 const round = require('../data/Models/round');
@@ -86,17 +86,19 @@ function calculateRoundWinner(){
 
 
 function selectCard(color) { 
-    let selected = '';
+    let selected = null;
 
     if(color === 'white'){
-        selected = random(cards.whiteContent); 
+        selected =  random(cards.whiteCards)
     }
     else 
     {
-        selected = random(cards.blackContent);   
+        selected = random(cards.blackCards);   
     }
+    
     return selected;
 }
+
 
 function random(array){
     const random = Math.floor(Math.random()*(array.length - 1));
@@ -104,13 +106,10 @@ function random(array){
 
     return select;
 }
+ 
 
+module.exports = { random, selectCard }; 
 
-
-//let selected = selectCard('white');
-//console.log(selected);
-
-console.log(gameControl());
 
 
 
