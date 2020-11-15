@@ -23,5 +23,24 @@ const getWhiteCardsPlayer = () => {
   
 }
 
-module.exports = { getWhiteCardsPlayer }; 
+const getBlackCard = () => {
+    const blackCard= gameLogic.selectCard('black')
+    let empty = true;
+
+    while (empty === true){
+        if(!blackCard.used){
+            blackCard.used = true;
+            usedBlack.push(blackCard);
+            empty = false;
+        }
+        else {
+            blackCard= gameLogic.selectCard('black')
+        }
+    }  
+    return blackCard;
+}
+console.log(getBlackCard());
+console.log(usedBlack);
+
+module.exports = { getWhiteCardsPlayer, getBlackCard, usedBlack, usedWhite}; 
 

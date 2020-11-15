@@ -13,8 +13,7 @@ function gameControl() {
     const testPlayer2 = createPlayer('Pepi', '1234');
     const testPlayer3 = createPlayer('Coqui', '1234');
     const testPlayer4 = createPlayer('Coco', '1234');
-    
-    console.log(gameRoom);
+  
     rooms.push(gameRoom);
 
     let gameRounds = gameRoom.rounds;
@@ -72,15 +71,18 @@ function createPlayer(name, roomId){
 }
         
 
-function calculateGameWinner(){
+function calculateGameWinner(players){
     const winner = {}
-    console.log('Aca se calcula quien es el ganador del juego');
+    players.sort((a, b) => {b.points-a.points});
+    winner = players[0];
+
     return winner;
-}
+};
+
     
-function calculateRoundWinner(){
+function calculateRoundWinner(id){
     const winner = {}
-    console.log('Aca se calcula quien es el ganador de la ronda');
+    //aca hay buscar al jugador con el id de quien eligio la carta que elige el zar
     return winner;
 }
 
@@ -108,7 +110,7 @@ function random(array){
 }
  
 
-module.exports = { random, selectCard }; 
+module.exports = { random, selectCard, createPlayer, createRound, createRoom, calculateGameWinner}; 
 
 
 
