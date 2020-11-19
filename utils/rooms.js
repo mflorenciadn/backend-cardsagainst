@@ -40,14 +40,15 @@ const isValidGame = () => {
         console.log('Rondas maximas alcanzadas. Fin del juego')
         isValid = false;
     } 
-    if (myRoom.players.length < CONST.MIN_PLAYERS) {
+    else if (myRoom.players.length < CONST.MIN_PLAYERS) {
         console.log('El minimo de jugadores debe ser ' + CONST.MIN_PLAYERS)
         isValid = false;
     }
-    if (myRoom.players.length > CONST.MAX_PLAYERS) {
+    else if (myRoom.players.length > CONST.MAX_PLAYERS) {
         console.log('El maximo de jugadores debe ser ' + CONST.MAX_PLAYERS)
         isValid = false;
     }
+    //averiguar si socket rooms permite fijar limites
 }
 
 const refreshPlayers = (id) => {

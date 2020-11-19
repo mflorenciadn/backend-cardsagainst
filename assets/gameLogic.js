@@ -58,8 +58,8 @@ function createTurn(player){
     }
 }
 
-function createPlayer(name, roomId){
-    const myPlayer = new player.Player(name, roomId);
+function createPlayer(id, name, roomId){
+    const myPlayer = new player.Player(id, name, roomId);
     const myRoom = rooms.find(room => room.id === roomId);
     myRoom.players.push(myPlayer);
     return myPlayer;

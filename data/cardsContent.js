@@ -1,3 +1,4 @@
+//pasarlo a archivo de texto o json 
 const blackContent = [
     "Attention students! Principal Butthead is at home recovering from ____. We hope he'll be back soon.",
     "The warm August air was filled with change. Things were different, for Kayla was now ____. ",

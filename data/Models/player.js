@@ -1,9 +1,9 @@
 class Player {
-    constructor(name, roomId) {
+    constructor(id, name, roomId) {
+      this.id = id;
       this.name = name;
-      this.rooomId = roomId;
+      this.roomId = roomId;
       this.points = 0;
-      //this.socketId = socketId;
       this.isZar = false
     }
   }
