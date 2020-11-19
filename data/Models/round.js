@@ -1,8 +1,7 @@
 class Round {
-    constructor(roomId) {
+    constructor(roomId, players) {
         this.roomId = roomId;
-        this.blackCard = blackCard;
-        this.players = [];
+        this.players = players;
         this.winner = {};
     }
 }
