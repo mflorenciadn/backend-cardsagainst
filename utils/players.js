@@ -2,11 +2,17 @@ const gameLogic = require('../assets/gameLogic')
 const players = [];
 
 const playerJoin = (id, name, roomId) => {
-    const player = gameLogic.createPlayer(id,name,roomId)
-    
-    players.push(player);
-    console.log(players)
-    return player;
+    if(players.find((item) => item.id === socketId) != undefined)
+    {
+        return players.find((item) => item.id === socketId)
+    }
+    else
+    {
+        const player = gameLogic.createPlayer(id,name,roomId)
+        players.push(player);
+        console.log(players)
+        return player;
+    }
 }
 
 const getCurrentplayer = (socketId) =>{

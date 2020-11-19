@@ -52,29 +52,6 @@ io.on("connect", (socket) => {
 
 
 
-  // socket.on('create roomId', (roomIdId, name) => {
-  //   if(gameLogic.checkroomIds(gameLogic.roomIds, roomIdId))
-  //   {
-  //     console.log('ya existe')
-  //   }
-  //   else
-  //   {
-  //     gameLogic.createroomId(roomIdId)
-  //     gameLogic.createPlayer(socket.id, name, roomIdId)
-  //   }
-    
-  // })
-
-  // socket.on('join roomId', (roomIdId, name) => {
-  //   socket.join(roomIdId, () => {
-  //     const player = gameLogic.createPlayer(socket.id, name, roomIdId)
-  //     io.to(player.rooomId).emit('chat message', `${player.name} se unió a la sala`)
-  //   })
-  // })
-
-
-
-
 
 
   
