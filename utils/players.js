@@ -15,7 +15,7 @@ const playerJoin = (id, name, roomId) => {
     }
 }
 
-const getCurrentplayer = (socketId) =>{
+const getCurrentPlayer = (socketId) =>{
     let current = players.find((item) => item.id === socketId)
     return current;
 }
@@ -28,7 +28,6 @@ const playerLeave = (socketId) => {
         console.log(newArray[0]);
         return newArray[0];
     }
-
 }
 
 const getRoomUsers = (roomId) => {
@@ -37,7 +36,7 @@ const getRoomUsers = (roomId) => {
 
 module.exports = {
     playerJoin,
-    getCurrentplayer,
+    getCurrentPlayer,
     playerLeave,
-    getRoomUsers
+    getRoomUsers,   
 }
