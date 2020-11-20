@@ -4,10 +4,7 @@ const player = require('../data/Models/player');
 const room = require('../data/Models/room');
 const round = require('../data/Models/round');
 const turn = require('../data/Models/turn');
-const rooms = require('../utils/rooms');
-
-console.log(room)
-
+const rooms = require( '../utils/rooms')
 
 function gameControl() {
     const gameRoom = createRoom('1234');
@@ -34,8 +31,6 @@ function checkRooms(id){
 }
 
 
-
-
 function createTurn(player){
     const myTurn = new turn.Turn(player);
 
@@ -46,22 +41,7 @@ function createTurn(player){
     }
 }
 
-function createPlayer(id, name, roomId){
-    const myPlayer = new player.Player(id, name, roomId);
-    let myRoom = rooms.find(room => room.id === roomId);
-    if(myRoom != undefined)
-    { 
-        myRoom.players.push(myPlayer);
-    }
-    else
-    {
-        myRoom = createRoom(roomId)
-        myRoom.players.push(myPlayer);
-    }
-    // console.log(myPlayer)
-    // console.log(rooms)
-    return myPlayer;
-}
+
 
 function calculateGameWinner(players){
     const winner = {}
@@ -104,6 +84,6 @@ function random(array){
 
 
 
-module.exports = {createPlayer,  createTurn, random, selectCard, calculateGameWinner, calculateRoundWinner, checkRooms};
+module.exports = {createTurn, random, selectCard, calculateGameWinner, calculateRoundWinner, rooms, checkRooms};
 
 

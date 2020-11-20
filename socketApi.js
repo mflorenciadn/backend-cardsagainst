@@ -28,9 +28,10 @@ io.on("connect", (socket) => {
   });
 
   
-  socket.on('newRound', (id) => {
+  socket.on('newRound', (roomId) => {
       console.log('log desde back')
-      const round = rooms.createRound(id)
+      const round = rooms.createRound(roomId)
+      console.log(round)
   })
 
   socket.on('chat update', (msg) => {

@@ -3,23 +3,25 @@ const playersLogic = require('./players')
 const CONST = require('../assets/constants')
 const room = require('../data/Models/room')
 const round = require('../data/Models/round')
-const rooms = [];
+const myRooms = [];
 
 const createRoom = (roomId) => {
     const myRoom = new room.Room(roomId);
-    rooms.push(myRoom);
+    console.log(room.Room)
+    myRooms.push(myRoom);
+    console.log(myRooms)
     return myRoom;
 }
 
 const initRoom = (roomId) => {
-    if(rooms.find((item) => item.id === roomId) != undefined)
+    if(myRooms.find((item) => item.id === roomId) != undefined)
     {
-        return rooms.find((item) => item.id === roomId)
+        return myRooms.find((item) => item.id === roomId)
     }
     else
     {
         const room = gameLogic.createRoom(roomId)
-        rooms.push(room);
+        myRooms.push(room);
         return room;
     }
 }
@@ -54,13 +56,14 @@ const playRound = () => {
     
     for(let i = 0; i < CONST.MAX_ROUNDS; i++){
 
-}
+}}
 
 const createRound = (id) => {
-    const myRoom =  rooms.find((item) => item.id === id)
+    const myRoom =  myRooms.find((item) => item.id === id)
+    console.log(myRoom)
     //const players = myRoom.players;
     const myRound = new round.Round(id);
-    console.log(myRound)
+    
 
 
 
@@ -71,8 +74,8 @@ const createRound = (id) => {
     // round.winner = calculateRoundWinner();
     //myRoom.rounds.push(myRound)
     return myRound;
-}
-}
+    }
+
 
 
 
@@ -105,5 +108,13 @@ const refreshPlayers = (id) => {
     return playersLogic.getRoomUsers(id);
 }
 
+const getRooms = () => {
+    console.log(myRooms)
+    return myRooms;
+}
 
-module.exports = { createRoom, createRound, refreshPlayers, isValidGame, playGame, initRoom, rooms }
+
+module.exports = {
+    createRoom,
+    getRooms,
+}
