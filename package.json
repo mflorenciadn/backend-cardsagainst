@@ -1,27 +1,27 @@
 {
-  "name": "backend-cardsagainst",
-  "version": "1.0.0",
-  "descripcion": "Proyecto final de la materia Taller de Programación 2 - Instituto ORT",
-  "private": true,
-  "scripts": {
-    "start": "nodemon ./bin/www",
-    "startdev": "nodemon ./socketApi"
-  },
-  "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.1"
-  },
-  "devDependencies": {
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.1.2"
-  }
+	"name": "backend-cardsagainst",
+	"version": "1.0.0",
+	"descripcion": "Proyecto final de la materia Taller de Programación 2 - Instituto ORT",
+	"private": true,
+	"scripts": {
+		"start": "nodemon ./bin/www",
+		"startdev": "nodemon ./socketApi"
+	},
+	"dependencies": {
+		"cookie-parser": "~1.4.4",
+		"debug": "~2.6.9",
+		"express": "~4.16.1",
+		"http-errors": "~1.6.3",
+		"jade": "~1.11.0",
+		"morgan": "~1.9.1",
+		"socket.io": "^2.3.0",
+		"socket.io-client": "^2.3.1"
+	},
+	"devDependencies": {
+		"eslint": "^7.13.0",
+		"eslint-config-prettier": "^6.15.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"nodemon": "^2.0.6",
+		"prettier": "^2.1.2"
+	}
 }

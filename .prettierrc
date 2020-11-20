@@ -3,5 +3,5 @@
 	"trailingComma": "es5",
 	"tabWidth": 1,
 	"useTabs": true,
-	"semi": false,
+	"semi": false
 }
