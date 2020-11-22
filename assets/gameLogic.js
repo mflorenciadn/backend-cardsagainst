@@ -39,6 +39,7 @@ function createRound(id) {
 
     const players = myRoom.players;
 
+<<<<<<< Updated upstream
     players.forEach(() => {
         createTurn(player);
     });
@@ -48,6 +49,8 @@ function createRound(id) {
     return myRound;
 }
 
+=======
+>>>>>>> Stashed changes
 function createTurn(player){
     const myTurn = new turn.Turn(player);
 
@@ -58,10 +61,18 @@ function createTurn(player){
     }
 }
 
+<<<<<<< Updated upstream
 function createPlayer(id, name, roomId){
     const myPlayer = new player.Player(id, name, roomId);
     const myRoom = rooms.find(room => room.id === roomId);
     myRoom.players.push(myPlayer);
+=======
+function createPlayer(id){
+    const myPlayer = new player.Player(id);
+    
+    // console.log(myPlayer)
+    // console.log(rooms)
+>>>>>>> Stashed changes
     return myPlayer;
 }
 

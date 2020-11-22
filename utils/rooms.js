@@ -2,8 +2,11 @@ const gameLogic = require('../assets/gameLogic')
 const playersLogic = require('./players')
 const CONST = require('../assets/constants')
 
-myRoom = gameLogic.createRoom(roomId);
-
+const createRoom = (roomId) => {
+    const myRoom = new room.Room(roomId);
+    rooms.push(myRoom);
+    return myRoom;
+}
 
 const playGame = (myRoom) => {
     
@@ -31,8 +34,30 @@ const playGame = (myRoom) => {
     }
 }
 
+const playRound = () => {
+    
+    for(let i = 0; i < CONST.MAX_ROUNDS; i++){
 
-const isValidGame = () => {
+    }
+}
+
+const createRound = id => {
+    const myRoom =  rooms.find((item) => item.id === id)
+    //const players = myRoom.players;
+    const myRound = new round.Round(id);
+    console.log(myRound)
+
+    // players.forEach(() => {
+    //     createTurn(player);
+    // });
+
+    // round.winner = calculateRoundWinner();
+    //myRoom.rounds.push(myRound)
+    return myRound;
+}
+
+
+const isValidGame = (myRoom) => {
     const isValid = true; 
     myRoom.players = refreshPlayers(myRoom.id)
 
@@ -54,3 +79,9 @@ const isValidGame = () => {
 const refreshPlayers = (id) => {
     return playersLogic.getRoomUsers(id);
 }
+
+const listRooms = () => {
+    return rooms.forEach(r => console.log(r))
+}
+
+module.exports = { createRoom, createRound, refreshPlayers, isValidGame, playGame, initRoom, listRooms }, rooms 
