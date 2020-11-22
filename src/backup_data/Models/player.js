@@ -1,8 +1,8 @@
 class Player {
-	constructor(id, name) {
+	constructor(id, name, roomId) {
 		this.id = id
 		this.name = name
-		this.roomId = ''
+		this.roomId = roomId
 		this.points = 0
 		this.isZar = false
 	}
