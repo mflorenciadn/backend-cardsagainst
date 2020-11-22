@@ -1,5 +1,5 @@
 const cardsContent = require('./cardsContent')
-const card = require('../data/Models/card')
+const card = require('./Models/card')
 
 const whiteContent = cardsContent.whiteContent
 const blackContent = cardsContent.blackContent

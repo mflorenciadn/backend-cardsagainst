@@ -1,21 +1,17 @@
 const gameLogic = require('../assets/gameLogic')
 const rooms = require('../utils/rooms');
+const player = require('../data/Models/player')
 const players = [];
 
-const playerJoin = (id, name, roomId) => {
-    const myRoom =  rooms.rooms.find((item) => item.id === id)
-    if(players.find((item) => item.id === socketId) != undefined)
-    {
-        return players.find((item) => item.id === socketId)
-    }
-    else
-    {
-        const player = gameLogic.createPlayer(id,name,roomId)
-        players.push(player);
-        myRoom.players.push(player)
-    
-        return player;
-    }
+
+const createPlayer = (id, name) => {
+    return new player.Player(id, name)
+}
+
+const playerJoin = (player, room) => {
+    player.roomId = room.id
+    room.players.push(player);
+    return room;
 }
 
 const getCurrentPlayer = (socketId) =>{
@@ -38,6 +34,7 @@ const getRoomUsers = (roomId) => {
 }
 
 module.exports = {
+    createPlayer,
     playerJoin,
     getCurrentPlayer,
     playerLeave,

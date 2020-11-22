@@ -11,6 +11,10 @@ const createRoom = (roomId) => {
     return myRoom;
 }
 
+const findRoom = (roomId) => {
+    return rooms.find(room => room.id === roomId)
+}
+
 const initRoom = (roomId) => {
     if(rooms.find((item) => item.id === roomId) != undefined)
     {
@@ -55,12 +59,13 @@ const playRound = () => {
     for(let i = 0; i < CONST.MAX_ROUNDS; i++){
 
 }
+}
 
 const createRound = (id) => {
     const myRoom =  rooms.find((item) => item.id === id)
     //const players = myRoom.players;
     const myRound = new round.Round(id);
-    console.log(myRound)
+    //console.log(myRound)
 
 
 
@@ -69,10 +74,10 @@ const createRound = (id) => {
     // });
 
     // round.winner = calculateRoundWinner();
-    //myRoom.rounds.push(myRound)
+    myRoom.rounds.push(myRound)
     return myRound;
 }
-}
+
 
 
 
@@ -106,4 +111,4 @@ const refreshPlayers = (id) => {
 }
 
 
-module.exports = { createRoom, createRound, refreshPlayers, isValidGame, playGame, initRoom, rooms }
+module.exports = { createRoom, findRoom, createRound, refreshPlayers, isValidGame, playGame, initRoom }, rooms;
