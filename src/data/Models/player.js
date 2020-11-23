@@ -1,11 +1,13 @@
-class Player {
-	constructor(id, name) {
-		this.id = id
-		this.name = name
-		this.roomId = ''
-		this.points = 0
-		this.isZar = false
-	}
+const player = {
+	id: '',
+	name: '',
+	roomId: '',
+	points: 0,
+	isZar: false,
 }
 
-module.exports = { Player }
+const newPlayer = () => {
+	return Object.create(player)
+}
+
+module.exports = { newPlayer }

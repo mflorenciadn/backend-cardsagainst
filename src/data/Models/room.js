@@ -1,10 +1,12 @@
-class Room {
-	constructor(roomId) {
-		this.id = roomId
-		this.players = []
-		this.rounds = []
-		this.winner = {}
-	}
+const room = {
+	id: '',
+	players: [],
+	rounds: [],
+	winner: {},
 }
 
-module.exports = { Room }
+const newRoom = () => {
+	return Object.create(room)
+}
+
+module.exports = { newRoom }

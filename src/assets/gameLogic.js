@@ -1,6 +1,6 @@
 const CONST = require('./constants')
 const cards = require('../data/db_cards')
-const player = require('../data/Models/player')
+const { newPlayer } = require('../data/Models/player')
 const room = require('../data/Models/room')
 const round = require('../data/Models/round')
 const turn = require('../data/Models/turn')
@@ -62,7 +62,7 @@ function createTurn(player) {
 }
 
 function createPlayer(id, name, roomId) {
-	const myPlayer = new player.Player(id, name, roomId)
+	const myPlayer = newPlayer(id, name, roomId)
 	let myRoom = rooms.find((room) => room.id === roomId)
 	if (myRoom != undefined) {
 		myRoom.players.push(myPlayer)

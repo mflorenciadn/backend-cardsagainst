@@ -1,25 +1,22 @@
-const room = require('./Models/room')
-const { getPlayerById } = require('./players_data')
+const { newRoom } = require('./Models/room')
 const rooms = []
 
-//Create
-const createRoom = (roomId) => {
-	const myRoom = new room.Room(roomId)
-	rooms.push(myRoom)
-	return myRoom
+// helpers
+const createUID = () => {
+	return 'room-' + Math.floor(Math.random() * 999999)
 }
 
-const getTotalRooms = () => {
+// finders
+const getAllRooms = () => {
 	return rooms
 }
+
 const getRoomById = (roomId) => {
 	return rooms.find((room) => room.Id == roomId)
 }
 
-const getRoomByPlayerId = (playerId) => {
-	return rooms.find((room) =>
-		room.players.foreach((player) => player.id == playerId)
-	)
+const getRoomIndexById = (roomId) => {
+	return rooms.findIndex((room) => room.Id == roomId)
 }
 
 const getPlayersByRoomId = (roomId) => {
@@ -27,23 +24,47 @@ const getPlayersByRoomId = (roomId) => {
 	return myRoom.players
 }
 
-const deletePlayerOfRoom = (playerId) => {
-	const myRoom = getRoomByPlayerId(playerId)
-	const myPlayer = getPlayerById(playerId)
-	const playersOfMyRoom = getPlayersByRoomId(myRoom.id)
-	const index = playersOfMyRoom.indexOf(myPlayer)
-	playersOfMyRoom.splice(index, 1)
+const getPlayerOfRoomById = (playerId, fn) => {
+	try {
+		rooms.forEach((room, iRoom) => {
+			room.players.forEach((player, iPlayer) => {
+				if (player.id == playerId) {
+					fn(room, player, iRoom, iPlayer)
+					return true
+				}
+			})
+		})
+	} catch (err) {
+		console.warn(err)
+	}
+	return false
 }
 
-const updateRoom = (room) => {
-	//
+const createRoom = (player) => {
+	const myRoom = newRoom()
+	myRoom.id = createUID()
+	myRoom.players.push(player)
+	rooms.push(myRoom)
+	return myRoom
+}
+
+const connectToRoom = (player, roomId) => {
+	const currentRoom = getRoomIndexById(roomId)
+	rooms[currentRoom].players.push(player)
+	return rooms[currentRoom]
+}
+
+const deletePlayerOfRoom = (playerId) => {
+	getPlayerOfRoomById(playerId, (room, _p, _iR, iPlayer) => {
+		room?.players.splice(iPlayer, 1)
+	})
 }
 
 module.exports = {
 	createRoom,
-	getTotalRooms,
+	getAllRooms,
 	getRoomById,
-	getRoomByPlayerId,
 	getPlayersByRoomId,
 	deletePlayerOfRoom,
+	connectToRoom,
 }
