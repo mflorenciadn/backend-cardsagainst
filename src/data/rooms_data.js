@@ -103,8 +103,6 @@ const getBlackCard = () => {
 
 
 
-module.exports = { getWhiteCardsPlayer, getBlackCard, usedBlack, usedWhite}; 
-
 
 module.exports = {
 	createRoom,
@@ -113,4 +111,6 @@ module.exports = {
 	getPlayersByRoomId,
 	deletePlayerOfRoom,
 	connectToRoom,
+	getWhiteCardsPlayer,
+	getWhiteCardsPlayer
 }

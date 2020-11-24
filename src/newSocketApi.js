@@ -20,6 +20,7 @@ const subscribeToCao = (newSocket) => {
 	socket.on('newConnection', (player, id) => newConnection(player, id))
 	socket.on('getPlayersByRoomId', getPlayers)
 	socket.on('newPlayer', getPlayerList)
+	socket.on('playCard', handlePlayCard)
 	socket.on('disconnect', handleDisconnection)
 }
 
@@ -50,6 +51,10 @@ const getPlayerList = () => {
 
 const handleDisconnection = () => {
 	//dataPlayers.deletePlayerById(socket.id)
+}
+
+const handlePlayCard = (card) => {
+	console.log('desde el back.. la card seleccionada fue: ' + card)
 }
 
 server.listen(port, () => console.log(`Listening on port ${port}`))
