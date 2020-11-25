@@ -6,7 +6,8 @@ const room = {
 }
 
 const newRoom = () => {
-	return Object.create(room)
+	return { ...room }
+	//return Object.assign({}, room)
 }
 
 module.exports = { newRoom }

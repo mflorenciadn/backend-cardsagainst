@@ -1,34 +1,38 @@
-const cardsContent = require('./cardsContent')
-const card = require('../data/Models/card')
+//const cardsContent = require('./cardsContent')
+const fs = require('fs')
+//const card = require('../data/Models/card')
 
-const whiteContent = cardsContent.whiteContent
-const blackContent = cardsContent.blackContent
+const rawCards = fs.readFileSync('../cards.json')
+const cardsArray = JSON.parse(rawCards)
 
-getWhiteCards = () => {
-	const cards = []
+//const whiteContent = cardsArray.whiteCards
+//const blackContent = cardsArray.blackCards
 
-	for (i = 0; i < whiteContent.length; i++) {
-		const whiteCard = new card.Card('white')
-		whiteCard.id = i + 1
-		whiteCard.content = whiteContent[i]
-		cards.push(whiteCard)
-	}
-	return cards
-}
+//const getWhiteCards = () => {
+//const cards = []
 
-getBlackCards = () => {
-	const cards = []
+//for (let i = 0; i < whiteContent.length; i++) {
+//	const whiteCard = new card.Card('white')
+//	whiteCard.id = i + 1
+//	whiteCard.content = whiteContent[i]
+//	cards.push(whiteCard)
+//}
+//return cardsArray.whiteCards
+//}
 
-	for (i = 0; i < blackContent.length; i++) {
-		const blackCard = new card.Card('black')
-		blackCard.id = i + 1
-		blackCard.content = blackContent[i]
-		cards.push(blackCard)
-	}
-	return cards
-}
+//const getBlackCards = () => {
+//const cards = []
 
-const blackCards = getBlackCards()
-const whiteCards = getWhiteCards()
+//for (i = 0; i < blackContent.length; i++) {
+//	const blackCard = new card.Card('black')
+//	blackCard.id = i + 1
+//	blackCard.content = blackContent[i]
+//	cards.push(blackCard)
+//}
+//return cardsArray.blackCards
+//}
+
+const blackCards = cardsArray.blackCards
+const whiteCards = cardsArray.whiteCards
 
 module.exports = { blackCards, whiteCards }

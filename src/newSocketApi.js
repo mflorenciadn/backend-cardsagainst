@@ -8,48 +8,39 @@ const port = process.env.PORT || 4001
 const server = http.createServer(app)
 const io = socketIo(server)
 
-io.on('connect', (newSocket) => {
-	subscribeToCao(newSocket)
+io.on('connect', (socket) => {
+	subscribeToCao(socket)
 })
 
-let socket
-let roomId
-
-const subscribeToCao = (newSocket) => {
-	socket = newSocket
-	socket.on('newConnection', (player, id) => newConnection(player, id))
-	socket.on('getPlayersByRoomId', getPlayers)
-	socket.on('newPlayer', getPlayerList)
-	socket.on('disconnect', handleDisconnection)
+const subscribeToCao = (socket) => {
+	socket.on('join_room', (playerName, roomId) =>
+		newConnection(socket, playerName, roomId)
+	)
+	socket.on('disconnect', (room) => handleDisconnection(socket, room))
+	socket.on('play_card', (card) => handlePlayCard(socket, card))
 }
 
-const newConnection = (player, currRoomId) => {
-	let myRoom
-	if (currRoomId) {
-		myRoom = roomsData.connectToRoom(player, currRoomId)
-	} else {
-		myRoom = roomsData.createRoom(player)
+const newConnection = (socket, playerName, roomId) => {
+	const newUser = {
+		name: playerName,
+		id: socket.id,
 	}
-	roomId = myRoom.roomId
-	socket.emit('joinRoom', myRoom)
+	let myRoom
+	if (roomId) {
+		myRoom = roomsData.connectToRoom(newUser, roomId)
+	} else {
+		myRoom = roomsData.createRoom(newUser)
+	}
 	socket.join(myRoom.id)
+	io.to(myRoom.id).emit('update_room', myRoom)
 }
 
-const getPlayers = () => {
-	const myPlayers = roomsData.getPlayersByRoomId(roomId)
-	socket.emit('updatePlayers', myPlayers)
-}
+// handlePlayCard => agrega la card al set de cartas jugadas en esta ronda.
+// NO SE ENCARGA de mandar las cartas con la ronda terminada
+const handlePlayCard = (socket, card) => {}
 
-const getPlayerList = () => {
-	socket.emit('playerList', roomsData.getPlayersByRoomId(roomId))
-}
-//const subscribeToPlayers = () => {
-//const myPlayers = dataPlayers.getTotalPlayers()
-//socket.emit('updatePlayers', myPlayers)
-//}
-
-const handleDisconnection = () => {
-	//dataPlayers.deletePlayerById(socket.id)
+const handleDisconnection = (socket, room) => {
+	roomsData.deletePlayerOfRoom(socket.id)
 }
 
 server.listen(port, () => console.log(`Listening on port ${port}`))

@@ -3,7 +3,7 @@ const rooms = []
 
 // helpers
 const createUID = () => {
-	return 'room-' + Math.floor(Math.random() * 999999)
+	return Math.floor(Math.random() * 999)
 }
 
 // finders
@@ -16,7 +16,7 @@ const getRoomById = (roomId) => {
 }
 
 const getRoomIndexById = (roomId) => {
-	return rooms.findIndex((room) => room.Id == roomId)
+	return rooms.findIndex((room) => room.id == roomId)
 }
 
 const getPlayersByRoomId = (roomId) => {
@@ -49,9 +49,18 @@ const createRoom = (player) => {
 }
 
 const connectToRoom = (player, roomId) => {
-	const currentRoom = getRoomIndexById(roomId)
-	rooms[currentRoom].players.push(player)
-	return rooms[currentRoom]
+	console.log(player, roomId)
+	try {
+		const currentRoom = getRoomIndexById(roomId)
+		if (currentRoom === -1) {
+			throw new Error()
+		}
+		rooms[currentRoom].players.push(player)
+		return rooms[currentRoom]
+	} catch (err) {
+		console.warn(err)
+		return false
+	}
 }
 
 const deletePlayerOfRoom = (playerId) => {
