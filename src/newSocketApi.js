@@ -18,6 +18,13 @@ const subscribeToCao = (socket) => {
 	)
 	socket.on('disconnect', (room) => handleDisconnection(socket, room))
 	socket.on('play_card', (card) => handlePlayCard(socket, card))
+	socket.on('play_game', (room) => handlePlayGame(room) )
+}
+
+const handlePlayGame = (room) => {
+	let roomId = room.id
+	console.log(roomId)
+	io.to(roomId).emit('play_room')
 }
 
 const newConnection = (socket, playerName, roomId) => {
