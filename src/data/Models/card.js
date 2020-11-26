@@ -1,10 +1,12 @@
-class Card {
-	constructor(color) {
-		this.id = null
-		this.content = ''
-		this.color = color
-		this.used = false
-	}
+const card = {
+	id: null,
+	content: '',
+	isBlack: false,
+	used: false,
 }
 
-module.exports = { Card }
+const newCard = () => {
+	return { ...card }
+}
+
+module.exports = { newCard }

@@ -8,6 +8,9 @@ const port = process.env.PORT || 4001
 const server = http.createServer(app)
 const io = socketIo(server)
 
+//const { getWhiteCards } = require('./data/db_cards')
+//getWhiteCards()
+
 io.on('connect', (socket) => {
 	subscribeToCao(socket)
 })
@@ -18,13 +21,11 @@ const subscribeToCao = (socket) => {
 	)
 	socket.on('disconnect', (room) => handleDisconnection(socket, room))
 	socket.on('play_card', (card) => handlePlayCard(socket, card))
-	socket.on('play_game', (room) => handlePlayGame(room) )
+	socket.on('play_game', (room) => handlePlayGame(room))
 }
 
 const handlePlayGame = (room) => {
-	let roomId = room.id
-	console.log(roomId)
-	io.to(roomId).emit('play_room')
+	io.to(room.id).emit('play_room')
 }
 
 const newConnection = (socket, playerName, roomId) => {
@@ -38,8 +39,9 @@ const newConnection = (socket, playerName, roomId) => {
 	} else {
 		myRoom = roomsData.createRoom(newUser)
 	}
+
 	socket.join(myRoom.id)
-	io.to(myRoom.id).emit('update_room', myRoom)
+	updateRoom(myRoom)
 }
 
 // handlePlayCard => agrega la card al set de cartas jugadas en esta ronda.
@@ -48,6 +50,10 @@ const handlePlayCard = (socket, card) => {}
 
 const handleDisconnection = (socket, room) => {
 	roomsData.deletePlayerOfRoom(socket.id)
+}
+
+const updateRoom = (room) => {
+	io.to(room.id).emit('update_room', room)
 }
 
 server.listen(port, () => console.log(`Listening on port ${port}`))

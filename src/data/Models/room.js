@@ -1,13 +1,16 @@
+const { getWhiteCards, getBlackCards } = require('../db_cards')
+
 const room = {
 	id: '',
 	players: [],
-	rounds: [],
-	winner: {},
+	whiteCards: getWhiteCards(),
+	blackCards: getBlackCards(),
+	//rounds: [],
+	//winner: {},
 }
 
 const newRoom = () => {
 	return { ...room }
-	//return Object.assign({}, room)
 }
 
 module.exports = { newRoom }
