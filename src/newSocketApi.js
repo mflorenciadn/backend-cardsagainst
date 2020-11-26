@@ -1,7 +1,9 @@
 const express = require('express')
 const http = require('http')
 const socketIo = require('socket.io')
+const cards_data = require('./data/cards_data')
 const roomsData = require('./data/rooms_data')
+
 
 const app = express()
 const port = process.env.PORT || 4001
@@ -21,11 +23,21 @@ const subscribeToCao = (socket) => {
 	)
 	socket.on('disconnect', (room) => handleDisconnection(socket, room))
 	socket.on('play_card', (card) => handlePlayCard(socket, card))
-	socket.on('play_game', (room) => handlePlayGame(room))
+	socket.on('play_game', (room) => handlePlayGame(socket, room))
+	socket.on('next_round', (room) => handleNextRound(socket, room))
 }
 
-const handlePlayGame = (room) => {
-	io.to(room.id).emit('play_room')
+const handleNextRound = (socket, room) => {
+	let roomId = room.id
+	let arr = cards_data.getWhiteCardsPlayer()
+	let blackCard = cards_data.getBlackCard()
+	socket.emit('next_card_array', arr)
+	io.to(roomId).emit('next_black_card', blackCard)
+}
+
+const handlePlayGame = (socket, room) => {
+	let roomId = room.id
+	io.to(roomId).emit('play_room', room)
 }
 
 const newConnection = (socket, playerName, roomId) => {
@@ -46,7 +58,11 @@ const newConnection = (socket, playerName, roomId) => {
 
 // handlePlayCard => agrega la card al set de cartas jugadas en esta ronda.
 // NO SE ENCARGA de mandar las cartas con la ronda terminada
-const handlePlayCard = (socket, card) => {}
+
+
+const handlePlayCard = (socket, card) => {
+	console.log(card)
+}
 
 const handleDisconnection = (socket, room) => {
 	roomsData.deletePlayerOfRoom(socket.id)
