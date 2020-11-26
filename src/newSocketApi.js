@@ -1,7 +1,6 @@
 const express = require('express')
 const http = require('http')
 const socketIo = require('socket.io')
-const cards_data = require('./data/cards_data')
 const rooms_data = require('./data/rooms_data')
 
 
@@ -10,8 +9,7 @@ const port = process.env.PORT || 4001
 const server = http.createServer(app)
 const io = socketIo(server)
 
-//const { getWhiteCards } = require('./data/db_cards')
-//getWhiteCards()
+
 
 io.on('connect', (socket) => {
 	subscribeToCao(socket)
@@ -25,16 +23,32 @@ const subscribeToCao = (socket) => {
 	socket.on('play_card', (card) => handlePlayCard(socket, card))
 	socket.on('play_game', (room) => handlePlayGame(socket, room))
 	socket.on('next_round', (room) => handleNextRound(socket, room))
+	socket.on('round_finished', (room) => getUserStatus(socket, room))
 }
 
 const handleNextRound = (socket, room) => {
-	room.round = room.round + 1
-	let roomId = room.id
-	let whites = rooms_data.getWhiteCardsPlayer(roomId)
-	let blackCard = rooms_data.getBlackCard(roomId)
+	try {
+		const roomId = room.id
+		const whites = rooms_data.getWhiteCardsPlayer(roomId)
+		const blackCard = rooms_data.getBlackCard(roomId)
+		getUserStatus(socket, roomId)
+		socket.emit('next_card_array', whites)
+		io.to(roomId).emit('next_black_card', blackCard)
+	} catch (err) {
+		console.warn(err)
+	}	
+}
+
+const getUserStatus = (socket, roomId) => {
 	rooms_data.setZar(roomId)
-	socket.emit('next_card_array', whites)
-	io.to(roomId).emit('next_black_card', blackCard)
+	const nRoom = rooms_data.getRoomById(roomId)
+	const players = rooms_data.getPlayersByRoomId(nRoom.id)
+	const player = players.find(p => p.id == socket.id)
+	const newUserStatus = {
+		points: player.points,
+		isZar: player.isZar
+	}
+	socket.emit('user_status', newUserStatus)
 }
 
 const handlePlayGame = (socket, room) => {
@@ -73,7 +87,11 @@ const handleDisconnection = (socket, room) => {
 }
 
 const updateRoom = (room) => {
-	io.to(room.id).emit('update_room', room)
+	 io.to(room.id).emit('update_room', room)
 }
+
+
+
+
 
 server.listen(port, () => console.log(`Listening on port ${port}`))

@@ -1,11 +1,11 @@
-const { getWhiteCards, getBlackCards } = require('../db_cards')
+const { getWhiteCards, getBlackCards } = require('../cards_data')
 
 const room = {
 	id: '',
 	players: [],
 	whiteCards: getWhiteCards(),
 	blackCards: getBlackCards(),
-	//rounds: [],
+	round: 0,
 	//winner: {},
 }
 

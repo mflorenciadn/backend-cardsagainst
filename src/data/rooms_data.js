@@ -35,16 +35,16 @@ const getPlayersByRoomId = (roomId) => {
 
 const getPlayerOfRoomById = (playerId, fn) => {
 	try {
-		rooms.forEach((room, iRoom) => {
+	rooms.forEach((room, iRoom) => {
 			room.players.forEach((player, iPlayer) => {
 				if (player.id == playerId) {
 					fn(room, player, iRoom, iPlayer)
 					return true
 				}
-			})
 		})
+	})
 	} catch (err) {
-		console.warn(err)
+		
 	}
 	return false
 }
@@ -70,15 +70,11 @@ const deletePlayerOfRoom = (playerId) => {
 }
 
 const setZar = (roomId) => {
-	console.log('el rood id que llega a setZar'+roomId)
 	let valid = isValidGame(roomId)
-	console.log('el valid' + valid)
 	if(valid){
 		const myRoom = getRoomById(roomId)
-		console.log('la room q agarra' + myRoom.id)
 		const players = myRoom.players
 		players[0].isZar = true
-		players.map(p => console.log(p.name, p.id, p.points, p.isZar))
 	}	
 }
 

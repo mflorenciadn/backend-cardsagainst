@@ -1,12 +1,42 @@
-const cardsContent = require('./cardsContent')
-const card = require('./Models/card')
 const CONST = require('../assets/constants')
+const fs = require('fs')
+const path = require('path')
+const { newCard } = require('./Models/card')
 
-const whiteContent = cardsContent.whiteContent
-const blackContent = cardsContent.blackContent
 
 const usedBlack = []
 const usedWhite = []
+
+const rawCards = fs.readFileSync(path.join(__dirname + '/../cards.json'))
+const cardsArray = JSON.parse(rawCards)
+
+const getWhiteCards = () => {
+	const cards = []
+
+	cardsArray.whiteCards.forEach((card, i) => {
+		const nCard = newCard()
+		nCard.id = i
+		nCard.content = card
+		cards.push(nCard)
+	})
+
+	return cards
+}
+
+const getBlackCards = () => {
+	const cards = []
+
+	cardsArray.blackCards.forEach((card, i) => {
+		const nCard = newCard()
+		nCard.id = i
+		nCard.content = card
+		nCard.isBlack = true
+		cards.push(nCard)
+	})
+
+	return cards
+}
+
 
 const getWhiteCardsPlayer = () => {
 	const whiteCardsPlayer = []
@@ -41,39 +71,13 @@ const getBlackCard = () => {
 	return blackCard
 }
 
-
-// getWhiteCards = () => {
-// 	const cards = []
-
-// 	for (i = 0; i < whiteContent.length; i++) {
-// 		const whiteCard = card.newCard()
-// 		whiteCard.id = i + 1
-// 		whiteCard.content = whiteContent[i]
-// 		whiteCards.isBlack = false
-// 		cards.push(whiteCard)
-// 	}
-// 	return cards
-// }
-
-// getBlackCards = () => {
-// 	const cards = []
-
-// 	for (i = 0; i < blackContent.length; i++) {
-// 		const blackCard = new card.Card('black')
-// 		blackCard.id = i + 1
-// 		blackCard.content = blackContent[i]
-// 		cards.push(blackCard)
-// 	}
-// 	return cards
-// }
-
 function selectCard(color) {
 	let selected = null
 
 	if (color === 'white') {
-		selected = random()
+		selected = random(getWhiteCards)
 	} else {
-		selected = random(getBlackCards())
+		selected = random(getBlackCards)
 	}
 
 	return selected
@@ -87,4 +91,4 @@ function random(array) {
 }
 
 
-module.exports = { getWhiteCardsPlayer, getBlackCard }
+module.exports = { getWhiteCards, getBlackCards, getWhiteCardsPlayer, getBlackCard }
