@@ -42,35 +42,36 @@ const getBlackCard = () => {
 }
 
 
-getWhiteCards = () => {
-	const cards = []
+// getWhiteCards = () => {
+// 	const cards = []
 
-	for (i = 0; i < whiteContent.length; i++) {
-		const whiteCard = new card.Card('white')
-		whiteCard.id = i + 1
-		whiteCard.content = whiteContent[i]
-		cards.push(whiteCard)
-	}
-	return cards
-}
+// 	for (i = 0; i < whiteContent.length; i++) {
+// 		const whiteCard = card.newCard()
+// 		whiteCard.id = i + 1
+// 		whiteCard.content = whiteContent[i]
+// 		whiteCards.isBlack = false
+// 		cards.push(whiteCard)
+// 	}
+// 	return cards
+// }
 
-getBlackCards = () => {
-	const cards = []
+// getBlackCards = () => {
+// 	const cards = []
 
-	for (i = 0; i < blackContent.length; i++) {
-		const blackCard = new card.Card('black')
-		blackCard.id = i + 1
-		blackCard.content = blackContent[i]
-		cards.push(blackCard)
-	}
-	return cards
-}
+// 	for (i = 0; i < blackContent.length; i++) {
+// 		const blackCard = new card.Card('black')
+// 		blackCard.id = i + 1
+// 		blackCard.content = blackContent[i]
+// 		cards.push(blackCard)
+// 	}
+// 	return cards
+// }
 
 function selectCard(color) {
 	let selected = null
 
 	if (color === 'white') {
-		selected = random(getWhiteCards())
+		selected = random()
 	} else {
 		selected = random(getBlackCards())
 	}
@@ -85,7 +86,5 @@ function random(array) {
 	return select
 }
 
-const blackCards = getBlackCards()
-const whiteCards = getWhiteCards()
 
-module.exports = { blackCards, whiteCards, getWhiteCardsPlayer, getBlackCard }
+module.exports = { getWhiteCardsPlayer, getBlackCard }

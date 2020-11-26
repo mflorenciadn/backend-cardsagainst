@@ -2,7 +2,7 @@ const express = require('express')
 const http = require('http')
 const socketIo = require('socket.io')
 const cards_data = require('./data/cards_data')
-const roomsData = require('./data/rooms_data')
+const rooms_data = require('./data/rooms_data')
 
 
 const app = express()
@@ -28,10 +28,12 @@ const subscribeToCao = (socket) => {
 }
 
 const handleNextRound = (socket, room) => {
+	room.round = room.round + 1
 	let roomId = room.id
-	let arr = cards_data.getWhiteCardsPlayer()
-	let blackCard = cards_data.getBlackCard()
-	socket.emit('next_card_array', arr)
+	let whites = rooms_data.getWhiteCardsPlayer(roomId)
+	let blackCard = rooms_data.getBlackCard(roomId)
+	rooms_data.setZar(roomId)
+	socket.emit('next_card_array', whites)
 	io.to(roomId).emit('next_black_card', blackCard)
 }
 
@@ -44,12 +46,14 @@ const newConnection = (socket, playerName, roomId) => {
 	const newUser = {
 		name: playerName,
 		id: socket.id,
+		points: 0,
+		isZar: false
 	}
 	let myRoom
 	if (roomId) {
-		myRoom = roomsData.connectToRoom(newUser, roomId)
+		myRoom = rooms_data.connectToRoom(newUser, roomId)
 	} else {
-		myRoom = roomsData.createRoom(newUser)
+		myRoom = rooms_data.createRoom(newUser)
 	}
 
 	socket.join(myRoom.id)
@@ -65,7 +69,7 @@ const handlePlayCard = (socket, card) => {
 }
 
 const handleDisconnection = (socket, room) => {
-	roomsData.deletePlayerOfRoom(socket.id)
+	rooms_data.deletePlayerOfRoom(socket.id)
 }
 
 const updateRoom = (room) => {

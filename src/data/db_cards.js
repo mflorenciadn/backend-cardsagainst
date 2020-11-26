@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { newCard } = require('./Models/card')
 
-console.log(newCard())
+
 const rawCards = fs.readFileSync(path.join(__dirname + '/../cards.json'))
 const cardsArray = JSON.parse(rawCards)
 
@@ -33,6 +33,5 @@ const getBlackCards = () => {
 	return cards
 }
 
-console.log(getWhiteCards())
 
 module.exports = { getBlackCards, getWhiteCards }

@@ -1,4 +1,5 @@
 const { newRoom } = require('./Models/room')
+const CONST = require('../assets/constants')
 const rooms = []
 
 // helpers
@@ -69,16 +70,16 @@ const deletePlayerOfRoom = (playerId) => {
 }
 
 const setZar = (roomId) => {
+	console.log('el rood id que llega a setZar'+roomId)
 	let valid = isValidGame(roomId)
-	while (valid) {
+	console.log('el valid' + valid)
+	if(valid){
 		const myRoom = getRoomById(roomId)
-		const players = rooms[myRoom].players
-		for (let i = 0; i < players.length; i++) {
-			players[i].isZar = true
-		}
-		players.foreach((p) => (p.isZar = false))
-		valid = isValidGame(roomId)
-	}
+		console.log('la room q agarra' + myRoom.id)
+		const players = myRoom.players
+		players[0].isZar = true
+		players.map(p => console.log(p.name, p.id, p.points, p.isZar))
+	}	
 }
 
 
@@ -93,16 +94,66 @@ const isValidGame = (roomId) => {
 		console.log('El minimo de jugadores debe ser ' + CONST.MIN_PLAYERS)
 		isValid = false
 	}
-	if (players.length > CONST.MAX_PLAYERS) {
+	else if (players.length > CONST.MAX_PLAYERS) {
 		console.log('El maximo de jugadores debe ser ' + CONST.MAX_PLAYERS)
 		isValid = false
 	}
+	else if (players.some(p => p.points==5)){
+		console.log('alguien gano')
+		isValid = false
+	}
+
 	
 	return isValid
 	
 }
 
+const getWhiteCardsPlayer = (roomId) => {
+	const whiteCardsPlayer = []
+	while(whiteCardsPlayer.length < CONST.NUM_CARDS){
+		const whiteCard = selectCard('white', roomId)
+		if (!whiteCard.used) {
+			whiteCardsPlayer.push(whiteCard)
+			whiteCard.used = true
+		}
+	}
+	return whiteCardsPlayer
+}
 
+const getBlackCard = (roomId) => {
+	let blackCard = selectCard('black', roomId)
+	let empty = true
+
+	while (empty === true) {
+		if (!blackCard.used) {
+			blackCard.used = true
+			empty = false
+		} else {
+			blackCard = selectCard('black', roomId)
+		}
+	}
+	return blackCard
+}
+
+function selectCard(color, roomId) {
+	const myRoom = getRoomById(roomId)
+	let selected = null
+
+	if (color === 'white') {
+		selected = random(myRoom.whiteCards)
+	} else {
+		selected = random(myRoom.blackCards)
+	}
+
+	return selected
+}
+
+function random(array) {
+	const random = Math.floor(Math.random() * (array.length - 1))
+	const select = array[random]
+
+	return select
+}
 
 
 
@@ -112,6 +163,8 @@ module.exports = {
 	getRoomById,
 	getPlayersByRoomId,
 	getPlayerOfRoomById,
+	getWhiteCardsPlayer,
+	getBlackCard,
 	deletePlayerOfRoom,
 	connectToRoom,
 	setZar,
