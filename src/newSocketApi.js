@@ -3,13 +3,10 @@ const http = require('http')
 const socketIo = require('socket.io')
 const rooms_data = require('./data/rooms_data')
 
-
 const app = express()
 const port = process.env.PORT || 4001
 const server = http.createServer(app)
 const io = socketIo(server)
-
-
 
 io.on('connect', (socket) => {
 	subscribeToCao(socket)
@@ -36,32 +33,35 @@ const handleNextRound = (socket, room) => {
 		io.to(roomId).emit('next_black_card', blackCard)
 	} catch (err) {
 		console.warn(err)
-	}	
+	}
 }
 
 const getUserStatus = (socket, roomId) => {
 	rooms_data.setZar(roomId)
 	const nRoom = rooms_data.getRoomById(roomId)
 	const players = rooms_data.getPlayersByRoomId(nRoom.id)
-	const player = players.find(p => p.id == socket.id)
+	const player = players.find((p) => p.id == socket.id)
 	const newUserStatus = {
 		points: player.points,
-		isZar: player.isZar
+		isZar: player.isZar,
 	}
 	socket.emit('user_status', newUserStatus)
 }
 
 const handlePlayGame = (socket, room) => {
-	let roomId = room.id
+	//console.log(room)
+	const roomId = room.id
 	io.to(roomId).emit('play_room', room)
 }
 
 const newConnection = (socket, playerName, roomId) => {
+	console.log('newConnection roomid')
+	console.log(roomId)
 	const newUser = {
 		name: playerName,
 		id: socket.id,
 		points: 0,
-		isZar: false
+		isZar: false,
 	}
 	let myRoom
 	if (roomId) {
@@ -77,7 +77,6 @@ const newConnection = (socket, playerName, roomId) => {
 // handlePlayCard => agrega la card al set de cartas jugadas en esta ronda.
 // NO SE ENCARGA de mandar las cartas con la ronda terminada
 
-
 const handlePlayCard = (socket, card) => {
 	console.log(card)
 }
@@ -87,11 +86,9 @@ const handleDisconnection = (socket, room) => {
 }
 
 const updateRoom = (room) => {
-	 io.to(room.id).emit('update_room', room)
+	console.log('updateRoom roomid')
+	console.log(room.id)
+	io.to(room.id).emit('update_room', room)
 }
-
-
-
-
 
 server.listen(port, () => console.log(`Listening on port ${port}`))

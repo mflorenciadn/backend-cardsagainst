@@ -4,7 +4,7 @@ const rooms = []
 
 // helpers
 const createUID = () => {
-	return Math.floor(Math.random() * 999)
+	return Math.floor(Math.random() * 999).toString()
 }
 
 // finders
@@ -35,17 +35,15 @@ const getPlayersByRoomId = (roomId) => {
 
 const getPlayerOfRoomById = (playerId, fn) => {
 	try {
-	rooms.forEach((room, iRoom) => {
+		rooms.forEach((room, iRoom) => {
 			room.players.forEach((player, iPlayer) => {
 				if (player.id == playerId) {
 					fn(room, player, iRoom, iPlayer)
 					return true
 				}
+			})
 		})
-	})
-	} catch (err) {
-		
-	}
+	} catch (err) {}
 	return false
 }
 
@@ -54,6 +52,7 @@ const createRoom = (player) => {
 	myRoom.id = createUID()
 	myRoom.players.push(player)
 	rooms.push(myRoom)
+	console.log(rooms)
 	return myRoom
 }
 
@@ -71,14 +70,12 @@ const deletePlayerOfRoom = (playerId) => {
 
 const setZar = (roomId) => {
 	let valid = isValidGame(roomId)
-	if(valid){
+	if (valid) {
 		const myRoom = getRoomById(roomId)
 		const players = myRoom.players
 		players[0].isZar = true
-	}	
+	}
 }
-
-
 
 const isValidGame = (roomId) => {
 	const isValid = true
@@ -89,24 +86,20 @@ const isValidGame = (roomId) => {
 	if (players.length < CONST.MIN_PLAYERS) {
 		console.log('El minimo de jugadores debe ser ' + CONST.MIN_PLAYERS)
 		isValid = false
-	}
-	else if (players.length > CONST.MAX_PLAYERS) {
+	} else if (players.length > CONST.MAX_PLAYERS) {
 		console.log('El maximo de jugadores debe ser ' + CONST.MAX_PLAYERS)
 		isValid = false
-	}
-	else if (players.some(p => p.points==5)){
+	} else if (players.some((p) => p.points == 5)) {
 		console.log('alguien gano')
 		isValid = false
 	}
 
-	
 	return isValid
-	
 }
 
 const getWhiteCardsPlayer = (roomId) => {
 	const whiteCardsPlayer = []
-	while(whiteCardsPlayer.length < CONST.NUM_CARDS){
+	while (whiteCardsPlayer.length < CONST.NUM_CARDS) {
 		const whiteCard = selectCard('white', roomId)
 		if (!whiteCard.used) {
 			whiteCardsPlayer.push(whiteCard)
@@ -150,8 +143,6 @@ function random(array) {
 
 	return select
 }
-
-
 
 module.exports = {
 	createRoom,
