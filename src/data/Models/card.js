@@ -3,6 +3,7 @@ const card = {
 	content: '',
 	isBlack: false,
 	used: false,
+	playedBy: ''
 }
 
 const newCard = () => {

@@ -1,4 +1,5 @@
 const { newRoom } = require('./Models/room')
+const { newRound } = require('./Models/round')
 const CONST = require('../assets/constants')
 const rooms = []
 
@@ -52,10 +53,15 @@ const createRoom = (player) => {
 	myRoom.id = createUID()
 	myRoom.players.push(player)
 	rooms.push(myRoom)
-	console.log(rooms)
+	// console.log(rooms)
 	return myRoom
 }
 
+const createRound = (roomId) => {
+	const myRoom = getRoomById(roomId)
+	const myRound = newRound()
+	myRoom.rounds.push(myRound)
+}
 const connectToRoom = (player, roomId) => {
 	const myRoom = getRoomById(roomId)
 	myRoom.players.push(player)
@@ -69,12 +75,9 @@ const deletePlayerOfRoom = (playerId) => {
 }
 
 const setZar = (roomId) => {
-	let valid = isValidGame(roomId)
-	if (valid) {
-		const myRoom = getRoomById(roomId)
-		const players = myRoom.players
-		players[0].isZar = true
-	}
+	const myRoom = getRoomById(roomId)
+	const players = myRoom.players
+	players[0].isZar = true
 }
 
 const isValidGame = (roomId) => {
@@ -109,6 +112,8 @@ const getWhiteCardsPlayer = (roomId) => {
 	return whiteCardsPlayer
 }
 
+
+
 const getBlackCard = (roomId) => {
 	let blackCard = selectCard('black', roomId)
 	let empty = true
@@ -124,7 +129,7 @@ const getBlackCard = (roomId) => {
 	return blackCard
 }
 
-function selectCard(color, roomId) {
+const selectCard = (color, roomId) => {
 	const myRoom = getRoomById(roomId)
 	let selected = null
 
@@ -137,12 +142,26 @@ function selectCard(color, roomId) {
 	return selected
 }
 
-function random(array) {
+const random = (array) => {
 	const random = Math.floor(Math.random() * (array.length - 1))
 	const select = array[random]
 
 	return select
 }
+
+const submitCard = (roomId, card, playerId) => {
+	const myRoom = getRoomById(roomId)
+	const actualRound = myRoom.rounds[myRoom.rounds.length - 1]
+	card.playedBy = playerId
+	actualRound.cards.push(card)
+}
+
+const getWhiteCardsZar = (roomId) => {
+	const myRoom = getRoomById(roomId)
+	const actualRound = myRoom.rounds[myRoom.rounds.length - 1]
+	return actualRound.cards
+}
+
 
 module.exports = {
 	createRoom,
@@ -155,4 +174,7 @@ module.exports = {
 	deletePlayerOfRoom,
 	connectToRoom,
 	setZar,
+	createRound,
+	submitCard,
+	isValidGame
 }

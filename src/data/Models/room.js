@@ -5,7 +5,7 @@ const room = {
 	players: [],
 	whiteCards: getWhiteCards(),
 	blackCards: getBlackCards(),
-	round: 0,
+	rounds: [],
 	//winner: {},
 }
 

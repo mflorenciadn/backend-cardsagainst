@@ -1,9 +1,10 @@
-class Round {
-	constructor(roomId, players) {
-		this.roomId = roomId
-		this.players = players
-		this.winner = {}
-	}
+const round = {
+	cards: [],
+	winner: {}
 }
 
-module.exports = { Round }
+const newRound = () => {
+	return { ...round }
+}
+
+module.exports = { newRound }
