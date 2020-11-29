@@ -2,6 +2,7 @@ const express = require('express')
 const http = require('http')
 const socketIo = require('socket.io')
 const rooms_data = require('./data/rooms_data')
+const {POINTS_WINNER} = require('./assets/constants')
 
 
 const app = express()
@@ -27,36 +28,26 @@ const subscribeToCao = (socket) => {
 }
 
 const handleRoundFinished = (socket, room, card) => {
-	const isValid = rooms_data.isValidGame(room.id)
+	const myRoom = rooms_data.getRoomById(room.id)
+	const players = myRoom.players
+	const winnerId = card.playedBy
+	const winner = players.find(p => p.id == winnerId)
+	winner.points = winner.points + 1
+	const isValid = rooms_data.isValidGame(myRoom.id)
 	if(isValid){
 		try {
-
-			// room.players = room.players.map(p => {
-			// 	if(p.id == card.playedBy){
-			// 		p.points++
-			// 	}
-			// })
-			const winnerId = card.playedBy
-			console.log(winnerId)
-			const players = room.players
-			console.log(players)
-			const winner = players.find(p => p.id == winnerId)
-			console.log(winner)
-			winner.points = winner.points + 1
-			console.log(winner.points)
-			const newUserStatus = {
-				points: winner.points
-			}
-			socket.to(winnerId).emit('user_status', newUserStatus)
-			updateRoom(room)
-			io.to(room.id).emit('new_round', room)
-		} catch (err) {
-			console.warn(err)
+		updateRoom(myRoom)
+		io.to(myRoom.id).emit('new_round', myRoom)
+		} 
+		catch (err) {
+		console.warn(err)
 		}
 	}
 	else
 	{
-		io.to(room.id).emit('show_winner')
+		const winner = players.find(p => p.points == POINTS_WINNER)
+		console.log('EL GANADOR ES', winner)
+		io.to(myRoom.id).emit('show_winner', winner)
 	}
 }
 
@@ -94,6 +85,7 @@ const getUserStatus = (socket, roomId) => {
 	socket.emit('user_status', newUserStatus)
 	return players;
 }
+
 
 const handlePlayGame = (socket, room) => {
 	let roomId = room.id

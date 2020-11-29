@@ -78,10 +78,11 @@ const setZar = (roomId) => {
 	const myRoom = getRoomById(roomId)
 	const players = myRoom.players
 	players[0].isZar = true
+	// podemos pasarle el numero de ronda
 }
 
 const isValidGame = (roomId) => {
-	const isValid = true
+	let isValid = true
 
 	const myRoom = getRoomById(roomId)
 	const players = myRoom.players
@@ -92,7 +93,7 @@ const isValidGame = (roomId) => {
 	} else if (players.length > CONST.MAX_PLAYERS) {
 		console.log('El maximo de jugadores debe ser ' + CONST.MAX_PLAYERS)
 		isValid = false
-	} else if (players.some((p) => p.points == 5)) {
+	} else if (players.some((p) => p.points == CONST.POINTS_WINNER)) {
 		console.log('alguien gano')
 		isValid = false
 	}
