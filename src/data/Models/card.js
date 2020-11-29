@@ -1,13 +1,14 @@
+const clone = require('lodash/clone')
 const card = {
 	id: null,
 	content: '',
 	isBlack: false,
 	used: false,
-	playedBy: ''
+	playedBy: '',
 }
 
 const newCard = () => {
-	return { ...card }
+	return clone(card)
 }
 
 module.exports = { newCard }

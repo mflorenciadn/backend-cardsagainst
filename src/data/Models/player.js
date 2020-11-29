@@ -1,3 +1,4 @@
+const clone = require('lodash/clone')
 const player = {
 	id: '',
 	name: '',
@@ -7,7 +8,7 @@ const player = {
 }
 
 const newPlayer = () => {
-	return Object.create(player)
+	return clone(player)
 }
 
 module.exports = { newPlayer }

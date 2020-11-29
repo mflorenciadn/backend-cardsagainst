@@ -1,10 +1,11 @@
+const cloneDeep = require('lodash/cloneDeep')
 const round = {
 	cards: [],
-	winner: {}
+	winner: {},
 }
 
 const newRound = () => {
-	return { ...round }
+	return cloneDeep(round)
 }
 
 module.exports = { newRound }

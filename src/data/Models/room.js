@@ -1,4 +1,5 @@
 const { getWhiteCards, getBlackCards } = require('../cards_data')
+const cloneDeep = require('lodash/cloneDeep')
 
 const room = {
 	id: '',
@@ -10,7 +11,7 @@ const room = {
 }
 
 const newRoom = () => {
-	return { ...room }
+	return cloneDeep(room)
 }
 
 module.exports = { newRoom }
