@@ -4,7 +4,7 @@
 	"descripcion": "Proyecto final de la materia Taller de Programación 2 - Instituto ORT",
 	"private": true,
 	"scripts": {
-		"dev": "node ./bin/www",
+		"dev": "nodemon ./src/newSocketApi.js",
 		"start": "node ./src/newSocketApi.js"
 	},
 	"dependencies": {
