@@ -2,11 +2,6 @@ const CONST = require('../assets/constants')
 const fs = require('fs')
 const path = require('path')
 const { newCard } = require('./Models/card')
-
-
-const usedBlack = []
-const usedWhite = []
-
 const rawCards = fs.readFileSync(path.join(__dirname + '/../cards.json'))
 const cardsArray = JSON.parse(rawCards)
 
