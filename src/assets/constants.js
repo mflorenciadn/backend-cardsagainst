@@ -1,7 +1,7 @@
 const MIN_PLAYERS = 3
 const MAX_PLAYERS = 9
 const NUM_CARDS = 10
-const POINTS_WINNER = 2
+const POINTS_WINNER = 5
 
 module.exports = {MIN_PLAYERS, MAX_PLAYERS, NUM_CARDS, POINTS_WINNER }
 

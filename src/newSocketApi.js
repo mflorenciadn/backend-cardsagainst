@@ -36,6 +36,11 @@ const handleRoundFinished = (socket, room, card) => {
 	const isValid = rooms_data.isValidGame(myRoom.id)
 	if(isValid){
 		try {
+		let primero = myRoom.players.shift()
+		myRoom.players.push(primero)
+		myRoom.players.forEach((player, i) => {
+			console.log(player, i)
+		})
 		updateRoom(myRoom)
 		io.to(myRoom.id).emit('new_round', myRoom)
 		} 
@@ -46,15 +51,14 @@ const handleRoundFinished = (socket, room, card) => {
 	else
 	{
 		const winner = players.find(p => p.points == POINTS_WINNER)
-		console.log('EL GANADOR ES', winner)
 		io.to(myRoom.id).emit('show_winner', winner)
 	}
 }
 
 const handleNextRound = (socket, room) => {
 	try {
-		const myRoom = rooms_data.getRoomById(room.id)
-		const players = getUserStatus(socket, myRoom.id)
+		const myRoom = getUserStatus(socket, room)
+		const players = myRoom.players
 		const zar = players.find(p => p.isZar == true)
 		if(socket.id == zar.id)
 		{
@@ -73,17 +77,15 @@ const handleNextRound = (socket, room) => {
 	}	
 }
 
-const getUserStatus = (socket, roomId) => {
-	rooms_data.setZar(roomId)
-	const nRoom = rooms_data.getRoomById(roomId)
-	const players = rooms_data.getPlayersByRoomId(nRoom.id)
-	const player = players.find(p => p.id == socket.id)
+const getUserStatus = (socket, room) => {
+	const myRoom = rooms_data.setZar(room)
+	const player = myRoom.players.find(p => p.id == socket.id)
 	const newUserStatus = {
 		points: player.points,
 		isZar: player.isZar
 	}
 	socket.emit('user_status', newUserStatus)
-	return players;
+	return myRoom
 }
 
 

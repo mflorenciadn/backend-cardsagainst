@@ -53,7 +53,6 @@ const createRoom = (player) => {
 	myRoom.id = createUID()
 	myRoom.players.push(player)
 	rooms.push(myRoom)
-	// console.log(rooms)
 	return myRoom
 }
 
@@ -62,6 +61,7 @@ const createRound = (roomId) => {
 	const myRound = newRound()
 	myRoom.rounds.push(myRound)
 }
+
 const connectToRoom = (player, roomId) => {
 	const myRoom = getRoomById(roomId)
 	myRoom.players.push(player)
@@ -74,12 +74,15 @@ const deletePlayerOfRoom = (playerId) => {
 	})
 }
 
-const setZar = (roomId) => {
-	const myRoom = getRoomById(roomId)
-	const players = myRoom.players
-	players[0].isZar = true
-	// podemos pasarle el numero de ronda
+
+
+const setZar = (room) => {
+	room.players[0].isZar = true;
+	return room
 }
+
+
+
 
 const isValidGame = (roomId) => {
 	let isValid = true
