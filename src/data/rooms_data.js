@@ -70,7 +70,7 @@ const connectToRoom = (player, roomId) => {
 
 const deletePlayerOfRoom = (playerId) => {
 	getPlayerOfRoomById(playerId, (room, _p, _iR, iPlayer) => {
-		room?.players.splice(iPlayer, 1)
+		room.players.splice(iPlayer, 1)
 	})
 }
 

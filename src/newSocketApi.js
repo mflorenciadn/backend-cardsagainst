@@ -72,6 +72,7 @@ const handleNextRound = (socket, room) => {
 }
 
 const getUserStatus = (socket, room) => {
+	const intervalId = subscribeToKeepAlive();
 	const myRoom = rooms_data.setZar(room)
 	const player = myRoom.players.find((p) => p.id == socket.id)
 	const newUserStatus = {
