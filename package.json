@@ -4,8 +4,8 @@
 	"descripcion": "Proyecto final de la materia Taller de Programación 2 - Instituto ORT",
 	"private": true,
 	"scripts": {
-		"start": "nodemon ./bin/www",
-		"dev": "nodemon ./src/newSocketApi.js"
+		"dev": "node ./bin/www",
+		"start": "node ./src/newSocketApi.js"
 	},
 	"dependencies": {
 		"cookie-parser": "~1.4.4",
@@ -16,7 +16,8 @@
 		"lodash": "^4.17.20",
 		"morgan": "~1.9.1",
 		"socket.io": "^2.3.0",
-		"socket.io-client": "^2.3.1"
+		"socket.io-client": "^2.3.1",
+		"nodemon": "^2.0.6"
 	},
 	"devDependencies": {
 		"eslint": "^7.13.0",

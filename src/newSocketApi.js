@@ -5,7 +5,7 @@ const rooms_data = require('./data/rooms_data')
 const { POINTS_WINNER } = require('./assets/constants')
 
 const app = express()
-const port = process.env.PORT || 4001
+const port = process.env.PORT || 3000
 const server = http.createServer(app)
 const io = socketIo(server)
 
@@ -25,6 +25,7 @@ const subscribeToCao = (socket) => {
 		handleRoundFinished(socket, room, card)
 	)
 }
+
 
 const handleRoundFinished = (socket, room, card) => {
 	const myRoom = rooms_data.getRoomById(room.id)
@@ -119,5 +120,13 @@ const handleDisconnection = (socket, room) => {
 const updateRoom = (room) => {
 	io.to(room.id).emit('update_room', room)
 }
+
+const subscribeToKeepAlive = () => {
+	const intervalId = setInterval(() => {
+	  io.emit("hi");
+	  console.log("keep alive sent :)");
+	}, 900000);
+	return intervalId;
+  };
 
 server.listen(port, () => console.log(`Listening on port ${port}`))
