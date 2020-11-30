@@ -76,7 +76,7 @@ const getUserStatus = (socket, room) => {
 	const newUserStatus = {
 		points: player.points,
 		isZar: player.isZar,
-		round: room.rounds.length,
+		round: room.rounds.length + 1,
 	}
 	socket.emit('user_status', newUserStatus)
 	return myRoom
