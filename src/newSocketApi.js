@@ -7,7 +7,7 @@ const { POINTS_WINNER } = require('./assets/constants')
 const app = express()
 const port = process.env.PORT || 3000
 const server = http.createServer(app)
-const io = socketIo(server)
+const io = socketIo(server,  { pingInterval: 900000 });
 
 io.on('connect', (socket) => {
 	subscribeToCao(socket)
@@ -126,7 +126,7 @@ const subscribeToKeepAlive = () => {
 	const intervalId = setInterval(() => {
 	  io.emit("hi");
 	  console.log("keep alive sent :)");
-	}, 900000);
+	}, 29000);
 	return intervalId;
   };
 
